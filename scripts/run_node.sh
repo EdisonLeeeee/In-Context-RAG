@@ -34,8 +34,8 @@ for model_name in "${models[@]}"; do
                 "${dataset}_few_shot_${topk}.jsonl"
                 "${dataset}_rag_${topk}.jsonl"
                 "${dataset}_query_rag_${topk}.jsonl"
+                "${dataset}_few_shot_rag_${topk}.jsonl"
                 "${dataset}_label_rag_${topk}.jsonl"
-                "${dataset}_label_only_rag_${topk}.jsonl"
             )
             for file_name in "${file_names[@]}"; do
                 # Input file name

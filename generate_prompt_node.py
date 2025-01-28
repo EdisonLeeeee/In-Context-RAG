@@ -121,7 +121,7 @@ for dataset in tqdm(['Cora', 'Pubmed', 'History', 'Children', 'Photo', 'Computer
 print(query)
 
 
-label_rag_template = """Classify the following text into one of the predefined categories: {category}. Use the provided references and corresponding categories to enhance your understanding of the topic and context for accurate classification. Make your decision based on the main topic and overall content of the text. If the text is ambiguous or does not clearly fit into any category, choose the closest match. Provide only the category name as the output.
+few_shot_rag_template = """Classify the following text into one of the predefined categories: {category}. Use the provided references and corresponding categories to enhance your understanding of the topic and context for accurate classification. Make your decision based on the main topic and overall content of the text. If the text is ambiguous or does not clearly fit into any category, choose the closest match. Provide only the category name as the output.
 
 Text: {text}
 
@@ -145,14 +145,14 @@ for dataset in tqdm(['Cora', 'Pubmed', 'History', 'Children', 'Photo', 'Computer
             s = txt[n]
             references += f'{i+1}. {s}\nCategory: {labels[n]}\n'
         references = references.rstrip()
-        query = label_rag_template.format(
+        query = few_shot_rag_template.format(
             category=category, text=t, references=references)
         data_list.append(dict(query=query, response=y))
-    write_to_jsonl(f'{temp_dir}/{dataset}_label_rag_{topk}.jsonl', data_list)
+    write_to_jsonl(f'{temp_dir}/{dataset}_few_shot_rag_{topk}.jsonl', data_list)
     print(f'{dataset} has {len(data_list)} samples.')
 print(query)
 
-label_only_rag_template = """Classify the following text into one of the predefined categories: {category}. Use the provided categories of reference texts to enhance your understanding of the topic and context for accurate classification. Make your decision based on the main topic and overall content of the text. If the text is ambiguous or does not clearly fit into any category, choose the closest match. Provide only the category name as the output.
+label_rag_template = """Classify the following text into one of the predefined categories: {category}. Use the provided categories of reference texts to enhance your understanding of the topic and context for accurate classification. Make your decision based on the main topic and overall content of the text. If the text is ambiguous or does not clearly fit into any category, choose the closest match. Provide only the category name as the output.
 
 Text: {text}
 
@@ -176,11 +176,11 @@ for dataset in tqdm(['Cora', 'Pubmed', 'History', 'Children', 'Photo', 'Computer
             s = txt[n]
             references += f'{i+1}. Category: {labels[n]}\n'
         references = references.rstrip()
-        query = label_only_rag_template.format(
+        query = label_rag_template.format(
             category=category, text=t, references=references)
         data_list.append(dict(query=query, response=y))
     write_to_jsonl(
-        f'{temp_dir}/{dataset}_label_only_rag_{topk}.jsonl', data_list)
+        f'{temp_dir}/{dataset}_label_rag_{topk}.jsonl', data_list)
     print(f'{dataset} has {len(data_list)} samples.')
 print(query)
 
