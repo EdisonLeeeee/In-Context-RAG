@@ -17,7 +17,7 @@ Edge description:
 Category:"""
 
 query_rag_template = """Classify the following edge into one of the predefined categories: {category}.
-Use the provided neighbouring edge descriptions to improve your understanding of context.  Base your decision on the
+Use the provided neighboring edge descriptions to improve your understanding of context.  Base your decision on the
 main theme across the texts and their temporal ordering. If the edge is ambiguous or does not fit clearly, choose the
 closest match.  Provide only the category name.
 
@@ -27,13 +27,13 @@ Edge description:
   Relation type: {relation_text}
   Time stamp: {timestamp}
 
-Neighbour edge references:
+Neighbor edge references:
 {references}
 
 Category:"""
 
 label_rag_edge_template = """Classify the following edge into one of the predefined categories: {category}.
-Use the supplied labels of neighbouring edges as hints.  Base your decision on the edge description and how those
+Use the supplied labels of neighboring edges as hints.  Base your decision on the edge description and how those
 labels may relate. If the edge is ambiguous or does not fit clearly, choose the closest match.  Provide only the
 category name.
 
@@ -43,13 +43,13 @@ Edge description:
   Relation type: {relation_text}
   Time stamp: {timestamp}
 
-Neighbour edge labels:
+Neighbor edge labels:
 {references}
 
 Category:"""
 
 few_shot_rag_edge_template = """Classify the following edge into one of the predefined categories: {category}.
-Use the neighbouring edge descriptions together with their labels to refine your answer.  Base your decision on the
+Use the neighboring edge descriptions together with their labels to refine your answer.  Base your decision on the
 supplied information and temporal ordering. If the edge is ambiguous or does not fit clearly, choose the closest
 match.  Provide only the category name.
 
@@ -59,7 +59,7 @@ Edge description:
   Relation type: {relation_text}
   Time stamp: {timestamp}
 
-Neighbour edge examples:
+Neighbor edge examples:
 {references}
 
 Category:"""
@@ -73,7 +73,7 @@ def _relation_text(rel_id: int, rel_df: pd.DataFrame) -> str:
     txt = rel_df.loc[rel_id, "text"]
     return txt
 
-def _recent_neighbours(
+def _recent_neighbors(
     edge_row: pd.Series,
     edge_df: pd.DataFrame,
     k: int = 3
@@ -146,8 +146,8 @@ def make_prompts(
         i_text = _node_text(edge.i, ent_df)
         rel_text = _relation_text(edge.r, rel_df)
 
-        # Gather neighbours
-        neigh = _recent_neighbours(edge, edge_df, k=k_neigh)
+        # Gather neighbors
+        neigh = _recent_neighbors(edge, edge_df, k=k_neigh)
         refs_text = _format_ref_text(neigh, ent_df, rel_df)
         refs_labels = _format_ref_labels(neigh)
         refs_text_labels = _format_ref_text_labels(neigh, ent_df, rel_df)
