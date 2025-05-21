@@ -40,7 +40,7 @@ apt-get install git-lfs
 ```
 
 ## Download Datasets
-Download CSTAG-related datasets. The `ogbn-arxiv` dataset will be downloaded automatically in the code.
++ Download CSTAG-related datasets. The `ogbn-arxiv` dataset will be downloaded automatically in the code.
 ```bash
 huggingface-cli download --repo-type dataset --resume-download Sherirto/CSTAG --local-dir CSTAG --local-dir-use-symlinks False
 ```
@@ -48,6 +48,8 @@ If the download fails in regions with restricted access, use a mirror source:
 ```bash
 HF_ENDPOINT=https://hf-mirror.com huggingface-cli download --repo-type dataset --resume-download Sherirto/CSTAG --local-dir CSTAG --local-dir-use-symlinks False
 ```
+
++ Download DTGB from [DTGN](https://github.com/zjs123/DTGB)
 
 ## Download Models from ModelScope
 ```bash
@@ -67,10 +69,12 @@ cd Meta-Llama-3.1-8B-Instruct && rm -rf .git
 + Preprocess datasets and construct prompts:
 ```python
 python generate_prompt_node.py
+python generate_prompt_edge.py
 ```
 + Configure the `gpu_ids` in the shell script, then run all models in one command (multi-GPU inference with native PyTorch):
 ```bash
 bash scripts/run_node.sh 
+bash scripts/run_edge.sh 
 ```
 
 For more parameter details, refer to the Swift documentation: [Command Line Parameters](https://swift.readthedocs.io/en/latest/Instruction/Command-line-parameters.html)
